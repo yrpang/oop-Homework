@@ -34,76 +34,19 @@ private:
     }
 
 public:
-    Room(){}
-    Room(int starLevel, float price, int bedNum)
-    {
-        this->No = ++maxNo;
-        this->starLevel = starLevel;
-        this->price = price;
-        this->bedsNum = bedNum;
-        this->userName = "";
-        status = 0;
-    }
+    Room() {}
+    Room(int starLevel, float price, int bedNum);
 
-    void showInfo()
-    {
-        std::cout << No << " " << starLevel << " " << price << " " << bedsNum << " " << userName << std::endl;
-    }
-
-    bool ifFull()
-    {
-        return status == 2;
-    }
-
-    bool ifSchedual()
-    {
-        return status == 1;
-    }
-
-    bool ifEmpty()
-    {
-        return status == 0;
-    }
-
-    void setPrice(float newprice)
-    {
-        price = newprice;
-    }
-
-    int getNo()
-    {
-        return No;
-    }
-
-    void checkIn(std::string userName)
-    {
-        status = 2;
-        this->userName = userName;
-    }
-
+    void showInfo();
+    bool ifFull();
+    bool ifSchedual();
+    bool ifEmpty();
+    void setPrice(float newprice);
+    int getNo();
+    void checkIn(std::string userName);
     // 退房或取消
-    void checkOut()
-    {
-        status = 0;
-        std::string tmp("");
-        this->userName = tmp;
-    }
-
-    float getPrice()
-    {
-        return price;
-    }
-
-    int book(std::string userName)
-    {
-        if (status != 0)
-            return -1;
-        status = 1;
-        this->userName = userName;
-        return 0;
-    }
+    void checkOut();
+    float getPrice();
+    int book(std::string userName);
 };
-
-int Room::maxNo = -1;
-
 #endif
