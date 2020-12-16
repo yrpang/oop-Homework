@@ -391,6 +391,8 @@ void loginMode(Hotel &h)
             case 2:
                 c->cancel();
                 break;
+            case 3:
+                c->comment();
             }
         }
     }

@@ -37,7 +37,7 @@ protected:
     }
 
 public:
-    User(){}
+    User() {}
     User(std::string userName, std::string passwd, std::string name, std::string phoneNum)
     {
         this->No = ++maxNo;
@@ -79,7 +79,7 @@ private:
     }
 
 public:
-    Admin(){}
+    Admin() {}
     Admin(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)
     {
         this->h = &h;
@@ -131,7 +131,7 @@ private:
     }
 
 public:
-    Waiter(){}
+    Waiter() {}
     Waiter(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)
     {
         this->h = &h;
@@ -185,7 +185,7 @@ private:
     }
 
 public:
-    Customer(){}
+    Customer() {}
     Customer(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)
     {
         starLevel = 0;
@@ -239,25 +239,61 @@ public:
             std::cout << "当前状态不可预定，请退房或取消已有预定！" << std::endl;
             return;
         }
+
+        time_t now = time(0);
+        std::string s = std::ctime(&now);
+        std::cout << "当前时间为" + s << "请问要预定几天后的房间:";
+        int n;
+        std::cin >> n;
+
+        if (n < 1 || n > 7)
+        {
+            std::cout << "请输入大于0小于7的数字!" << std::endl;
+        }
+
         int roomNo = h->book(this->No);
         if (roomNo != -1)
         {
             status = 1;
             this->roomNo = roomNo;
+            this->schedualTime = now += n * 24 * 3600;
             std::cout << "预定成功！" << std::endl;
         }
     }
 
     void cancel()
     {
-        if (status == 2)
+        if (status != 1)
         {
-            std::cout << "您当前已经入住，不可取消，请联系前台！" << std::endl;
+            std::cout << "当前状态无法取消，请联系前台！" << std::endl;
+            return;
+        }
+        time_t now = time(0);
+        long day_now = now / 3600 / 24;
+        long day_schedual = schedualTime / 3600 / 24;
+        if (day_schedual - day_now < 1)
+        {
+            std::cout << "距离预定时间太近了，不能取消，抱歉！" << std::endl;
             return;
         }
         h->cancel(this->roomNo);
         status = 0;
         std::cout << "预定取消成功！" << std::endl;
+    }
+
+    void comment()
+    {
+        if (status != 3)
+        {
+            std::cout << "退房后才能评论哦,期待您的好评～" << std::endl;
+        }
+        else
+        {
+            std::cout << "请输入您的评价：";
+            std::string com;
+            std::cin >> com;
+            this->comments.emplace_back(com);
+        }
     }
 };
 
