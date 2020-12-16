@@ -23,16 +23,16 @@ protected:
     static int maxNo;
 
     friend class boost::serialization::access;
-    template<class Archive>
+    template <class Archive>
     void serialize(Archive &ar, const unsigned int version)
     {
-        ar & No;
-        ar & userName;
-        ar & passwd;
-        ar & name;
-        ar & phoneNum;
-        ar & lastLogin;
-        ar & maxNo;
+        ar &No;
+        ar &userName;
+        ar &passwd;
+        ar &name;
+        ar &phoneNum;
+        ar &lastLogin;
+        ar &maxNo;
     }
 
 public:
@@ -69,12 +69,13 @@ private:
     Hotel *h;
 
     friend class boost::serialization::access;
-    template<class Archive>
+    template <class Archive>
     void serialize(Archive &ar, const unsigned int version)
     {
-        ar & boost::serialization::base_object<User>(*this);
+        ar &boost::serialization::base_object<User>(*this);
+        ar &h;
     }
-    
+
 public:
     Admin(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)
     {
@@ -118,6 +119,14 @@ class Waiter : public User
 private:
     Hotel *h;
 
+    friend class boost::serialization::access;
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar &boost::serialization::base_object<User>(*this);
+        ar &h;
+    }
+
 public:
     Waiter(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)
     {
@@ -154,6 +163,22 @@ private:
     int roomNo;
 
     Hotel *h;
+
+    friend class boost::serialization::access;
+    template <class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar &boost::serialization::base_object<User>(*this);
+        ar &h;
+
+        ar &starLevel;
+        ar &status;
+        ar &startTime;
+        ar &endTime;
+        ar &schedualTime;
+        ar &comments;
+        ar &roomNo;
+    }
 
 public:
     Customer(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)

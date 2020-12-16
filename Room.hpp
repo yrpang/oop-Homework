@@ -21,16 +21,16 @@ private:
     static int maxNo;
 
     friend class boost::serialization::access;
-    template<class Archive>
+    template <class Archive>
     void serialize(Archive &ar, const unsigned int version)
     {
-        ar & No;
-        ar & starLevel;
-        ar & price;
-        ar & bedsNum;
-        ar & status;
-        ar & userName;
-        ar & maxNo;
+        ar &No;
+        ar &starLevel;
+        ar &price;
+        ar &bedsNum;
+        ar &status;
+        ar &userName;
+        ar &maxNo;
     }
 
 public:

@@ -412,28 +412,38 @@ int main()
 
     Waiter waiter("waiter0", "123", "lll", "1333", h);
     h.setWaiter(waiter);
-    while (true)
+
+    std::ofstream ofs("filename");
+
     {
-        int choice;
-        cout << "#############酒店管理系统#############" << std::endl;
-        cout << "[1] Admin登陆" << std::endl;
-        cout << "[2] 前台登陆" << std::endl;
-        cout << "[3] 顾客模式" << std::endl;
-        cout << "请选择登陆模式: ";
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            adminMode(h);
-            break;
-        case 2:
-            waiterMode(h);
-            break;
-        case 3:
-            customerMode(h);
-            break;
-        }
+        boost::archive::text_oarchive oa(ofs);
+        // write class instance to archive
+        oa << h;
+        // archive and stream closed when destructors are called
     }
+
+    // while (true)
+    // {
+    //     int choice;
+    //     cout << "#############酒店管理系统#############" << std::endl;
+    //     cout << "[1] Admin登陆" << std::endl;
+    //     cout << "[2] 前台登陆" << std::endl;
+    //     cout << "[3] 顾客模式" << std::endl;
+    //     cout << "请选择登陆模式: ";
+    //     cin >> choice;
+    //     switch (choice)
+    //     {
+    //     case 1:
+    //         adminMode(h);
+    //         break;
+    //     case 2:
+    //         waiterMode(h);
+    //         break;
+    //     case 3:
+    //         customerMode(h);
+    //         break;
+    //     }
+    // }
 
     return 0;
 }

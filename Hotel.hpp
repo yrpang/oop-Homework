@@ -18,14 +18,19 @@ class Hotel
 {
 private:
     friend class boost::serialization::access;
-    template<class Archive>
+    template <class Archive>
     void serialize(Archive &ar, const unsigned int version)
     {
-        ar & freeRoom;
-        ar & UserToDiscount;
-        ar & DaysToDiscount;
-        ar & totalIncome;
+        ar &freeRoom;
+        ar &UserToDiscount;
+        ar &DaysToDiscount;
+        ar &totalIncome;
+        ar &rooms;
+        ar &admin;
+        ar &waiter;
+        ar &customer;
     }
+
 protected:
     int freeRoom;
     std::vector<Room> rooms;
