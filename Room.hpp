@@ -34,6 +34,7 @@ private:
     }
 
 public:
+    Room(){}
     Room(int starLevel, float price, int bedNum)
     {
         this->No = ++maxNo;
