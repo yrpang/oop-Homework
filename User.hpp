@@ -37,6 +37,7 @@ protected:
     }
 
 public:
+    User(){}
     User(std::string userName, std::string passwd, std::string name, std::string phoneNum)
     {
         this->No = ++maxNo;
@@ -78,6 +79,7 @@ private:
     }
 
 public:
+    Admin(){}
     Admin(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)
     {
         this->h = &h;
@@ -129,6 +131,7 @@ private:
     }
 
 public:
+    Waiter(){}
     Waiter(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)
     {
         this->h = &h;
@@ -182,6 +185,7 @@ private:
     }
 
 public:
+    Customer(){}
     Customer(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)
     {
         starLevel = 0;
