@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(ser CXX)
+project (OOP)
 
 find_package(Boost COMPONENTS serialization REQUIRED)
 
-add_executable(app main.cpp)
+add_executable (main main.cpp)
