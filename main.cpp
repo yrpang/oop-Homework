@@ -420,12 +420,17 @@ void save(Hotel &h)
 int main()
 {
     Hotel h;
-    Admin admin("admin", "123", "yrpang", "1333", h);
-    h.setAdmin(admin);
 
-    Waiter waiter("waiter0", "123", "lll", "1333", h);
-    h.setWaiter(waiter);
+    std::ifstream ifs("data.txt");
+    boost::archive::text_iarchive ia(ifs);
 
+    // restore the schedule from the archive
+    ia >> h;
+    // Admin admin("admin", "123", "yrpang", "1333", h);
+    // h.setAdmin(admin);
+
+    // Waiter waiter("waiter0", "123", "lll", "1333", h);
+    // h.setWaiter(waiter);
 
     while (true)
     {
@@ -450,6 +455,7 @@ int main()
             break;
         case 0:
             save(h);
+            return 0;
         }
     }
 
