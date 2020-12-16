@@ -50,7 +50,6 @@ protected:
 
     // getIndex工具函数
     int getRoomIndex(int roomNo);
-
     int getCustomIndex(int userNo);
 
 public:
@@ -61,14 +60,11 @@ public:
 
     // 各种信息显示函数
     void showFree();
-
     void showUser(bool availableOnly = false);
-
     void showStatus();
 
     // 一次性初始化所用的函数
     void setAdmin(Admin &a);
-
     void setWaiter(Waiter &w);
 
     // 酒店管理函数
