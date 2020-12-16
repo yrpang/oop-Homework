@@ -7,8 +7,8 @@
 #include "User.hpp"
 #include "Hotel.hpp"
 #include <fstream>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 using namespace std;
 
@@ -85,13 +85,16 @@ int Hotel::getCustomIndex(int userNo)
         return j;
 }
 
-void Hotel::showUser()
+void Hotel::showUser(bool availableOnly)
 {
     std::cout << std::setw(10) << std::setiosflags(std::ios::left) << "现有顾客为:" << std::endl;
     std::cout << "顾客编号 姓名" << std::endl;
     for (int i = 0; i < customer.size(); i++)
     {
-        std::cout << customer[i].getNo() << " " << customer[i].getUserName() << std::endl;
+        if (!availableOnly || !customer[i].ifIn())
+        {
+            std::cout << customer[i].getNo() << " " << customer[i].getUserName() << std::endl;
+        }
     }
 }
 
@@ -101,7 +104,7 @@ void Hotel::checkin()
     std::cout << "-------可用房间信息-------------" << std::endl;
     this->showFree();
     std::cout << "-------可用顾客信息-------------" << std::endl;
-    this->showUser();
+    this->showUser(true);
 
     std::cout << "请输入顾客编号和房间号:";
     int no, roomNo;
@@ -114,8 +117,14 @@ void Hotel::checkin()
         std::cout << "用户不存在" << endl;
         return;
     }
-    // cout<<"checkIn roomNo:"<<roomNo<<endl;
-    customer[j].checkIn(roomNo);
+    if (customer[j].ifIn())
+    {
+        cout << "顾客已经入住了不可以重复入住！" << endl;
+    }
+    else
+    {
+        customer[j].checkIn(roomNo);
+    }
 
     int i = this->getRoomIndex(roomNo);
     if (i == -1)
@@ -161,6 +170,16 @@ void Hotel::changeRoom()
 // 退房收款
 void Hotel::checkOut()
 {
+    cout << "--------现有入住客人信息----------" << endl;
+    cout << "编号 姓名 房间号" << endl;
+    for (int i = 0; i < customer.size(); i++)
+    {
+        if (customer[i].ifIn())
+        {
+            cout << customer[i].getNo() << " " << customer[i].getUserName() << " " << customer[i].getRoomNo() << endl;
+        }
+    }
+
     std::cout << "请输入顾客编号:";
     int no;
     std::cin >> no;
@@ -408,9 +427,9 @@ void customerMode(Hotel &h)
 
 void save(Hotel &h)
 {
-    std::ofstream ofs("data.txt");
+    std::ofstream ofs("data.dat");
     {
-        boost::archive::text_oarchive oa(ofs);
+        boost::archive::binary_oarchive oa(ofs);
         // write class instance to archive
         oa << h;
         // archive and stream closed when destructors are called
@@ -421,16 +440,21 @@ int main()
 {
     Hotel h;
 
-    std::ifstream ifs("data.txt");
-    boost::archive::text_iarchive ia(ifs);
+    std::ifstream ifs("data.dat");
+    if (ifs)
+    {
+        boost::archive::binary_iarchive ia(ifs);
+        ia >> h;
+    }
+    else
+    {
+        Admin admin("admin", "123", "yrpang", "1333", h);
+        h.setAdmin(admin);
 
-    // restore the schedule from the archive
-    ia >> h;
-    // Admin admin("admin", "123", "yrpang", "1333", h);
-    // h.setAdmin(admin);
-
-    // Waiter waiter("waiter0", "123", "lll", "1333", h);
-    // h.setWaiter(waiter);
+        Waiter waiter("waiter0", "123", "lll", "1333", h);
+        h.setWaiter(waiter);
+        cout << "这是您第一次使用已经自动初始化，请记得保存。" << endl;
+    }
 
     while (true)
     {

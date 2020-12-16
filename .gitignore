@@ -3,6 +3,8 @@
 .vscode
 .DS_Store
 
+*.dat
+
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles

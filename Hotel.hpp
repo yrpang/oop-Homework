@@ -151,7 +151,7 @@ public:
         }
     }
 
-    void showUser();
+    void showUser(bool availableOnly = false);
 
     void showStatus()
     {
