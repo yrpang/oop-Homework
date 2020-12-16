@@ -7,7 +7,7 @@
 #ifndef USER_H
 #define USER_H
 
-#include "Hotel.h"
+#include "Hotel.hpp"
 
 class User
 {

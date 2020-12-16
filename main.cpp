@@ -3,9 +3,10 @@
 #include <string>
 #include <vector>
 #include <ctime>
-#include "Room.h"
-#include "User.h"
-#include "Hotel.h"
+#include "Room.hpp"
+#include "User.hpp"
+#include "Hotel.hpp"
+#include <boost/serialization/base_object.hpp>
 
 using namespace std;
 

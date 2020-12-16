@@ -4,7 +4,7 @@
 #include <vector>
 #include <ctime>
 
-#include "Room.h"
+#include "Room.hpp"
 
 #ifndef HOTEL_H
 #define HOTEL_H
