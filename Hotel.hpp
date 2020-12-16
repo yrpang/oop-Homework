@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <boost/serialization/base_object.hpp>
 
 #include "Room.hpp"
 
@@ -15,6 +16,16 @@ class Waiter;
 class Customer;
 class Hotel
 {
+private:
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & freeRoom;
+        ar & UserToDiscount;
+        ar & DaysToDiscount;
+        ar & totalIncome;
+    }
 protected:
     int freeRoom;
     std::vector<Room> rooms;

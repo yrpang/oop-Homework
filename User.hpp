@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <boost/serialization/base_object.hpp>
 
 #ifndef USER_H
 #define USER_H
@@ -20,6 +21,19 @@ protected:
     time_t lastLogin;
 
     static int maxNo;
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & No;
+        ar & userName;
+        ar & passwd;
+        ar & name;
+        ar & phoneNum;
+        ar & lastLogin;
+        ar & maxNo;
+    }
 
 public:
     User(std::string userName, std::string passwd, std::string name, std::string phoneNum)
@@ -54,6 +68,13 @@ class Admin : public User
 private:
     Hotel *h;
 
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & boost::serialization::base_object<User>(*this);
+    }
+    
 public:
     Admin(std::string userName, std::string passwd, std::string name, std::string phoneNum, Hotel &h) : User(userName, passwd, name, phoneNum)
     {

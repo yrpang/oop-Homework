@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <boost/serialization/base_object.hpp>
 
 #ifndef ROOM_H
 #define ROOM_H
@@ -18,6 +19,19 @@ private:
     std::string userName;
 
     static int maxNo;
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version)
+    {
+        ar & No;
+        ar & starLevel;
+        ar & price;
+        ar & bedsNum;
+        ar & status;
+        ar & userName;
+        ar & maxNo;
+    }
 
 public:
     Room(int starLevel, float price, int bedNum)
