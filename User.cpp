@@ -124,6 +124,11 @@ bool Customer::ifIn()
     return status == 2;
 }
 
+bool Customer::ifBook()
+{
+    return status == 1;
+}
+
 int Customer::getStar()
 {
     return starLevel;

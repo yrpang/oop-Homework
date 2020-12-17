@@ -33,7 +33,7 @@ private:
     }
 
 protected:
-    int freeRoom;
+    int freeRoom; // 空房数目
     std::vector<Room> rooms;
     std::vector<Admin> admin;
     std::vector<Waiter> waiter;

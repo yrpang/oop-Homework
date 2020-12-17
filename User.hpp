@@ -132,6 +132,7 @@ public:
     void changeRoomNo(int roomNo);
     int checkOut();
     bool ifIn();
+    bool ifBook();
     int getStar();
     void book();
     void cancel();

@@ -121,7 +121,7 @@ void loginMode(Hotel &h)
     Customer *c = h.customerLogin(user, passwd);
     if (c)
     {
-        cout << "-----------前台模式-----------" << std::endl;
+        cout << "-----------用户模式-----------" << std::endl;
         cout << "[1] 预定" << std::endl;
         cout << "[2] 取消" << std::endl;
         cout << "[3] 评论" << std::endl;

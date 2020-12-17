@@ -32,7 +32,8 @@ void Hotel::setUserDiscount()
     int n;
     std::cin >> n;
     std::cout << "请依次输入顾客星级和对应优惠(star discount格式):";
-    int star, dis;
+    int star;
+    float dis;
     for (int i = 0; i < n; i++)
     {
         std::cin >> star >> dis;
@@ -46,7 +47,8 @@ void Hotel::setDaysDiscount()
     int n;
     std::cin >> n;
     std::cout << "请依次起止天数和对应优惠[start, end) e.g. 2 4 0.8 表示住2、3天的为8折:";
-    int start, end, dis;
+    int start, end;
+    float dis;
     for (int i = 0; i < n; i++)
     {
         std::cin >> start >> end >> dis;
@@ -230,14 +232,12 @@ void Hotel::showUser(bool availableOnly)
 // 办理入住
 void Hotel::checkin()
 {
-    std::cout << "-------可用房间信息-------------" << std::endl;
-    this->showFree();
     std::cout << "-------可用顾客信息-------------" << std::endl;
     this->showUser(true);
 
-    std::cout << "请输入顾客编号和房间号:";
+    std::cout << "请输入顾客编号:";
     int no, roomNo;
-    std::cin >> no >> roomNo;
+    std::cin >> no;
 
     int j = this->getCustomIndex(no);
     // cout<<"checkIn cusNo:"<<j<<endl;
@@ -252,6 +252,18 @@ void Hotel::checkin()
     }
     else
     {
+        if (customer[j].ifBook())
+        {
+            roomNo = customer[j].getRoomNo();
+        }
+        else
+        {
+            std::cout << "-------可用房间信息-------------" << std::endl;
+            this->showFree();
+            std::cout << "用户没有预定，请输入房间号:";
+            std::cin >> roomNo;
+        }
+
         customer[j].checkIn(roomNo);
     }
 
